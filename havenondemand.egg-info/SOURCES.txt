@@ -1,0 +1,9 @@
+setup.cfg
+setup.py
+havenondemand.egg-info/PKG-INFO
+havenondemand.egg-info/SOURCES.txt
+havenondemand.egg-info/dependency_links.txt
+havenondemand.egg-info/entry_points.txt
+havenondemand.egg-info/top_level.txt
+havenondemand.egg-info/zip-safe
+havenondemand/__init__.py

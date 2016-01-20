@@ -1,0 +1,11 @@
+Metadata-Version: 2.0
+Name: havenondemand
+Version: 2.0dev
+Summary: Haven OnDemand Python client library
+Home-page: http://havenondemand.com
+Author: Phong Vu
+Author-email: van-phong.vu@hpe.com
+License: UNKNOWN
+Description: UNKNOWN
+Keywords: Haven OnDemand havenondemand hod
+Platform: UNKNOWN
