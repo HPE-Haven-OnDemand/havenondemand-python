@@ -54,7 +54,7 @@ class HODClient(object):
 		try:
 			response = requests.get(queryStr, verify=False, timeout=600)
 			if response.status_code == 429:
-				print "Throttled, Sleeping 2 seconds"
+				print ("Throttled, Sleeping 2 seconds")
 				time.sleep(2)
 				self.GetJobResult(jobId, callback, **kwargs)
 			elif response.status_code != 200:
@@ -65,7 +65,7 @@ class HODClient(object):
 						return None
 					else:
 						callback(None, self.errorsList, **kwargs)
-				except ValueError, e:
+				except ValueError:
 					self.__createErrorObject(response.status_code, response.reason, response.text, jobId)
 					if callback is None:
 						return None
@@ -86,7 +86,7 @@ class HODClient(object):
 							return resp
 						else:
 							callback(resp, None, **kwargs)
-				except ValueError, e:
+				except ValueError:
 					self.__createErrorObject(ErrorCode.INVALID_HOD_RESPONSE, "Response is not a json string.", response.text, jobId)
 					if callback is None:
 						return None
@@ -116,9 +116,8 @@ class HODClient(object):
 		queryStr = "%s%s?apikey=%s" % (self.hodJobStatus, jobId, self.apiKey)
 		try:
 			response = requests.get(queryStr, verify=False, timeout=600)
-			print response.json()
 			if response.status_code == 429:
-				print "Throttled, Sleeping 2 seconds"
+				print ("Throttled, Sleeping 2 seconds")
 				time.sleep(2)
 				self.GetJobStatus(jobId, callback, **kwargs)
 			elif response.status_code != 200:
@@ -129,7 +128,7 @@ class HODClient(object):
 						return None
 					else:
 						callback(None, self.errorsList, **kwargs)
-				except ValueError, e:
+				except ValueError:
 					self.__createErrorObject(response.status_code, response.reason, response.text, jobId)
 					if callback is None:
 						return None
@@ -149,7 +148,7 @@ class HODClient(object):
 							return resp
 						else:
 							callback(resp, None, **kwargs)
-				except ValueError, e:
+				except ValueError:
 					self.__createErrorObject(ErrorCode.INVALID_HOD_RESPONSE, "Response is not a json string.", response.text, jobId)
 					if callback is None:
 						return None
@@ -218,7 +217,7 @@ class HODClient(object):
 		try:
 			response = requests.post(queryStr, data=data, files=files, proxies=proxyDict, verify=False, timeout=600)
 			if response.status_code == 429:
-				print "Throttled, Sleeping 2 seconds"
+				print ("Throttled, Sleeping 2 seconds")
 				time.sleep(2)
 				self.PostRequest(params,hodApp,async,callback,**kwargs)
 			elif response.status_code != 200:
@@ -229,7 +228,7 @@ class HODClient(object):
 						return None
 					else:
 						callback(None, self.errorsList, **kwargs)
-				except ValueError, e:
+				except ValueError:
 					self.__createErrorObject(response.status_code, response.reason)
 					if callback is None:
 						return None
@@ -250,7 +249,7 @@ class HODClient(object):
 								return resp
 							else:
 								callback(resp, None,**kwargs)
-					except ValueError, e:
+					except ValueError:
 						self.__createErrorObject(ErrorCode.INVALID_HOD_RESPONSE, "Response is not a json string.", response.text)
 						if callback is None:
 							return None
@@ -270,7 +269,7 @@ class HODClient(object):
 								return jsonObj #jobID
 							else:
 								callback(jobID, None,**kwargs)
-					except ValueError, e:
+					except ValueError:
 						self.__createErrorObject(ErrorCode.INVALID_HOD_RESPONSE, "Response is not a json string.", response.text)
 						if callback is None:
 							return None
@@ -319,19 +318,18 @@ class HODClient(object):
 		try:
 			response = requests.get(queryStr, verify=False, timeout=600)
 			if response.status_code == 429:
-				print "Throttled, Sleeping 2 seconds"
+				print ("Throttled, Sleeping 2 seconds")
 				time.sleep(2)
 				self.GetRequest(params,hodApp,async,callback,**kwargs)
 			elif response.status_code != 200:
 				try:
-					print response.text
 					jsonObj = json.loads(response.text)
 					self.__parseHODResponse(jsonObj)
 					if callback is None:
 						return None
 					else:
 						callback(None, self.errorsList, **kwargs)
-				except ValueError, e:
+				except ValueError:
 					self.__createErrorObject(response.status_code, response.reason)
 					if callback is None:
 						return None
@@ -352,7 +350,7 @@ class HODClient(object):
 								return resp
 							else:
 								callback(resp, None,**kwargs)
-					except ValueError, e:
+					except ValueError:
 						self.__createErrorObject(ErrorCode.INVALID_HOD_RESPONSE, "Response is not a json string.", response.text)
 						if callback is None:
 							return None
@@ -372,7 +370,7 @@ class HODClient(object):
 								return jsonObj #jobID
 							else:
 								callback(jobID, None,**kwargs)
-					except ValueError, e:
+					except ValueError:
 						self.__createErrorObject(ErrorCode.INVALID_HOD_RESPONSE, "Response is not a json string.", response.text)
 						if callback is None:
 							return None
