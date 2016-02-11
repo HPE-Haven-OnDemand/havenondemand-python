@@ -151,7 +151,7 @@ def requestCompleted(response, error, **kwargs):
   print response
 
 params = {'file': 'path/to/file.jpg'}
-client.get_request(params, HODApps.ANALYZE_SENTIMENT, async=False, requestCompleted)
+client.get_request(params, HODApps.OCR_DOCUMENT, async=False, requestCompleted)
 ```
 
 ## License
