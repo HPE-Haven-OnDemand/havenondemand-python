@@ -26,7 +26,7 @@ pip install git+https://github.com/HPE-Haven-OnDemand/havenondemand-python-v2.0
 ```
 
 ## Importing into your app and initializing the client
-Place the following at the top of your app or wherever you are including libraries
+Place the following where you are including libraries
 ```python
 from havenondemand.hodclient import *
 client = HODClient("API_KEY", version="v1")
