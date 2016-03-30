@@ -139,6 +139,7 @@ print response
 
 ### Asynchronous Speech Recognition POST request checking response with Status API
 *Note: Larger files POSTed to the APIs take some time to process, so if you call the* `get_job_status` *API immediately afterwards, it will respond back with a* `Processing` *result. Allow the API enough time for the completed response.*
+
 ```python
 params = {'file': 'path/to/file.mp3'}
 jobID = client.post_request(params, HODApps.RECOGNIZE_SPEECH, async=True)
