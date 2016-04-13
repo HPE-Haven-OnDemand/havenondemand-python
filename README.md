@@ -69,7 +69,7 @@ where the response will be in the `response` dictionary.
 ### Asynchronous
 To make an asynchronous POST request to our Sentiment Analysis API
 ```python
-jobID = post_request({'text': 'I love Haven OnDemand!'}, HODApps.ANALYZE_SENTIMENT, async=True)
+jobID = client.post_request({'text': 'I love Haven OnDemand!'}, HODApps.ANALYZE_SENTIMENT, async=True)
 ```
 which will return back the job ID of your call.
 
@@ -117,7 +117,7 @@ client.post_request({'text': 'I love Haven OnDemand!'}, HODApps.ANALYZE_SENTIMEN
 ## POSTing files
 POSTing files is just as easy. Simply include the path to the file you're POSTing in the parameters
 ```python
-response = hodClient.post_request({'file': 'path/to/file.jpg'}, HODApps.OCR_DOCUMENT, async=False)
+response = client.post_request({'file': 'path/to/file.jpg'}, HODApps.OCR_DOCUMENT, async=False)
 ```
 
 ## Examples
