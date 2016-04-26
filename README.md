@@ -22,7 +22,7 @@ For a full list of all the APIs and to try them out, check out https://www.haven
 To install the latest version from this github repo
 
 ```
-pip install git+https://github.com/HPE-Haven-OnDemand/havenondemand-python-v2.0
+pip install git+https://github.com/HPE-Haven-OnDemand/havenondemand-python
 ```
 
 ## Importing into your app and initializing the client
