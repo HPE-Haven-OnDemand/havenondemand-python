@@ -18,6 +18,10 @@ Haven OnDemand is a set of over 70 APIs for handling all sorts of unstructured d
 For a full list of all the APIs and to try them out, check out https://www.havenondemand.com/developer/apis
 
 ## Installation
+To install, run the following command
+```
+pip install havenondemand
+```
 
 To install the latest version from this github repo
 
