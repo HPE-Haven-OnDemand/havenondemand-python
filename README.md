@@ -73,7 +73,8 @@ where the response will be in the `response` dictionary.
 ### Asynchronous
 To make an asynchronous POST request to our Sentiment Analysis API
 ```python
-jobID = post_request({'text': 'I love Haven OnDemand!'}, HODApps.ANALYZE_SENTIMENT, async=True)
+response_async = post_request({'text': 'I love Haven OnDemand!'}, HODApps.ANALYZE_SENTIMENT, async=True)
+jobID = response_async['jobID']
 ```
 which will return back the job ID of your call.
 
@@ -136,7 +137,8 @@ print response
 ### Asynchronous Sentiment Analysis POST request checking response with Result API
 ```python
 params = {'text': 'I love Haven OnDemand!'}
-jobID = client.post_request(params, HODApps.ANALYZE_SENTIMENT, async=True)
+response_async = client.post_request(params, HODApps.ANALYZE_SENTIMENT, async=True)
+jobID = response_async['jobID']
 response = client.get_job_result(jobID)
 print response
 ```
@@ -146,7 +148,8 @@ print response
 
 ```python
 params = {'file': 'path/to/file.mp3'}
-jobID = client.post_request(params, HODApps.RECOGNIZE_SPEECH, async=True)
+response_async = client.post_request(params, HODApps.RECOGNIZE_SPEECH, async=True)
+jobID = response_async['jobID']
 response = client.get_job_status(jobID)
 print response
 ```
