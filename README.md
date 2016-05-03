@@ -35,6 +35,15 @@ Place the following where you are including libraries
 from havenondemand.hodclient import *
 client = HODClient("API_KEY", version="v1")
 ```
+Using HODClient with proxies
+# define your proxy address
+proxyDict = {
+	#"http"  : "http proxy adress",
+	# "https" : "https proxy address",
+	# "ftp"   : "ftp proxy address" 
+}
+client = HODClient("API_KEY", **proxyDict)
+```
 where you replace "API_KEY" with your API key found [here](https://www.havenondemand.com/account/api-keys.html). `version` is an *optional* parameter which can be either `"v1"` or `"v2"`, but defaults to `"v1"` if not specified.
 
 ## Sending requests to the API - POST and GET

@@ -41,7 +41,7 @@ class HODClient(object):
 	proxy = None
 	errorsList = HODErrors()
 
-	def __init__(self, apikey, apiversion="v1", proxy={}):
+	def __init__(self, apikey, apiversion="v1", **proxy):
 		self.apiVersion = apiversion
 		self.apiKey = apikey
 		self.proxy = proxy
@@ -52,7 +52,7 @@ class HODClient(object):
 	def get_job_result(self, jobId, callback=None, **kwargs):
 		queryStr = "%s%s?apikey=%s" % (self.hodJobResult, jobId, self.apiKey)
 		try:
-			response = requests.get(queryStr, verify=False, timeout=600)
+			response = requests.get(queryStr, self.proxy, verify=False, timeout=600)
 			if response.status_code == 429:
 				print ("Throttled, Sleeping 2 seconds")
 				time.sleep(2)
@@ -115,7 +115,7 @@ class HODClient(object):
 	def get_job_status(self, jobId, callback=None, **kwargs):
 		queryStr = "%s%s?apikey=%s" % (self.hodJobStatus, jobId, self.apiKey)
 		try:
-			response = requests.get(queryStr, verify=False, timeout=600)
+			response = requests.get(queryStr, self.proxy, verify=False, timeout=600)
 			if response.status_code == 429:
 				print ("Throttled, Sleeping 2 seconds")
 				time.sleep(2)
@@ -215,7 +215,7 @@ class HODClient(object):
 				else:
 					data.append((key, value))
 		try:
-			response = requests.post(queryStr, data=data, files=files, proxies=proxyDict, verify=False, timeout=600)
+			response = requests.post(queryStr, data=data, files=files, proxies=self.proxy, verify=False, timeout=600)
 			if response.status_code == 429:
 				print ("Throttled, Sleeping 2 seconds")
 				time.sleep(2)
@@ -316,7 +316,7 @@ class HODClient(object):
 			else:
 				queryStr += "&%s=%s" % (key, value)
 		try:
-			response = requests.get(queryStr, verify=False, timeout=600)
+			response = requests.get(queryStr, proxies=self.proxy, verify=False, timeout=600)
 			if response.status_code == 429:
 				print ("Throttled, Sleeping 2 seconds")
 				time.sleep(2)
@@ -477,6 +477,9 @@ class HODApps:
 	GET_SUB_GRAPH = "getsubgraph"
 	SUGGEST_LINKS = "suggestlinks"
 	SUMMARIZE_GRAPH = "summarizegraph"
+
+	ANOMALY_DETECTION = "anomalydetection"
+	TREND_ANALYSIS = "trendanalysis"
 
 	CREATE_CLASSIFICATION_OBJECTS = "createclassificationobjects"
 	CREATE_POLICY_OBJECTS = "createpolicyobjects"
