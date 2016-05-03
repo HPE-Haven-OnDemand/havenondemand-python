@@ -34,9 +34,8 @@ Place the following where you are including libraries
 ```python
 from havenondemand.hodclient import *
 client = HODClient("API_KEY", version="v1")
-```
-Using HODClient with proxies
-# define your proxy address
+
+# Using HODClient with proxies
 proxyDict = {
 	#"http"  : "http proxy adress",
 	# "https" : "https proxy address",
