@@ -34,16 +34,19 @@ Place the following where you are including libraries
 ```python
 from havenondemand.hodclient import *
 client = HODClient("API_KEY", version="v1")
-
-# Using HODClient with proxies
-proxyDict = {
-	#"http"  : "http proxy adress",
-	# "https" : "https proxy address",
-	# "ftp"   : "ftp proxy address" 
-}
-client = HODClient("API_KEY", **proxyDict)
 ```
 where you replace "API_KEY" with your API key found [here](https://www.havenondemand.com/account/api-keys.html). `version` is an *optional* parameter which can be either `"v1"` or `"v2"`, but defaults to `"v1"` if not specified.
+
+If operating behind a firewall, specify a proxy when initiating the client. Here is an example:
+```python
+from havenondemand.hodclient import *
+proxyDict = {
+   "http"  : "http://user:pass@proxy.server.com:3128",
+   "https" : "http://user:pass@proxy.server.com:3128",
+   # "ftp"   : ftp_proxy
+}
+client = HODClient("API_KEY", version="v1", **proxyDict)
+```
 
 ## Sending requests to the API - POST and GET
 You can send requests to the API with either a POST or GET request, where POST requests are required for uploading files and recommended for larger size queries and GET requests are recommended for smaller size queries.
