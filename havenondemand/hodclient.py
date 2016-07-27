@@ -449,6 +449,8 @@ class HODClient(object):
 
 class HODApps:
 	RECOGNIZE_SPEECH = "recognizespeech"
+	RECOGNIZE_LICENSE_PLATE = "recognizelicenseplates"
+	DETECT_SCENE_CHANGES = "detectscenechanges"
 
 	CANCEL_CONNECTOR_SCHEDULE = "cancelconnectorschedule"
 	CONNECTOR_HISTORY = "connectorhistory"
@@ -478,8 +480,7 @@ class HODApps:
 	SUGGEST_LINKS = "suggestlinks"
 	SUMMARIZE_GRAPH = "summarizegraph"
 
-	ANOMALY_DETECTION = "anomalydetection"
-	TREND_ANALYSIS = "trendanalysis"
+	MAP_COORDINAETS = "mapcoordinates"
 
 	CREATE_CLASSIFICATION_OBJECTS = "createclassificationobjects"
 	CREATE_POLICY_OBJECTS = "createpolicyobjects"
@@ -515,6 +516,7 @@ class HODApps:
 	HIGHLIGHT_TEXT = "highlighttext"
 	IDENTIFY_LANGUAGE = "identifylanguage"
 	ANALYZE_SENTIMENT = "analyzesentiment"
+	GET_TEXT_STATISTICS = "gettextstatistics"
 	TOKENIZE_TEXT = "tokenizetext"
 
 	ADD_TO_TEXT_INDEX = "addtotextindex"
