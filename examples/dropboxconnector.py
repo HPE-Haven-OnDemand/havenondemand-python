@@ -1,7 +1,9 @@
 from havenondemand.hodclient import *
+from havenondemand.hodresponseparser import *
 import sys
 
 hodClient = HODClient("YOUR-API-KEY")
+parser = HODResponseParser()
 
 def main(argv):
     hodApp = ""
@@ -24,13 +26,14 @@ def main(argv):
         params['flavor'] = "explorer"
 
         response = hodClient.post_request(params, hodApp, False)
-        if response is None:
-            errors = hodClient.get_last_error()
-            for err in errors.errors:
+        payloadObj = parser.parse_payload(response)
+        if payloadObj is None:
+            errorObj = parser.get_last_error()
+            for err in errorObj.errors:
                 print "Error code: %d \nReason: %s \nDetails: %s\n" % (err.error, err.reason, err.detail)
         else:
-            print ("INDEX NAME: %s" % response['index'])
-            print ("MESSAGE: %s" % response['message'])
+            print ("INDEX NAME: %s" % payloadObj['index'])
+            print ("MESSAGE: %s" % payloadObj['message'])
 
     elif hodApp is HODApps.CREATE_CONNECTOR:
         params = dict()
@@ -67,37 +70,40 @@ def main(argv):
         #} """
 
         response = hodClient.post_request(params, hodApp, False)
-        if response is None:
-            errors = hodClient.get_last_error()
-            for err in errors.errors:
+        payloadObj = parser.parse_payload(response)
+        if payloadObj is None:
+            errorObj = parser.get_last_error()
+            for err in errorObj.errors:
                 print "Error code: %d \nReason: %s \nDetails: %s\n" % (err.error, err.reason, err.detail)
         else:
-            print ("CONNECTOR NAME: %s" % response['connector'])
-            print ("MESSAGE: %s" % response['message'])
+            print ("CONNECTOR NAME: %s" % payloadObj['connector'])
+            print ("MESSAGE: %s" % payloadObj['message'])
 
     elif hodApp is HODApps.START_CONNECTOR:
         params = dict()
         params['connector'] = argv[1]
         response = hodClient.get_request(params, hodApp, False)
-        if response is None:
-            errors = hodClient.get_last_error()
-            for err in errors.errors:
+        payloadObj = parser.parse_payload(response)
+        if payloadObj is None:
+            errorObj = parser.get_last_error()
+            for err in errorObj.errors:
                 print "Error code: %d \nReason: %s \nDetails: %s\n" % (err.error, err.reason, err.detail)
         else:
-            print ("CONNECTOR NAME: %s" % response['connector'])
-            print ("TOKEN: %s" % response['token'])
+            print ("CONNECTOR NAME: %s" % payloadObj['connector'])
+            print ("TOKEN: %s" % payloadObj['token'])
 
     elif hodApp is HODApps.CONNECTOR_STATUS:
         params = dict()
         params['connector'] = argv[1]
         response = hodClient.get_request(params, hodApp, False)
-        if response is None:
-            errors = hodClient.get_last_error()
-            for err in errors.errors:
+        payloadObj = parser.parse_payload(response)
+        if payloadObj is None:
+            errorObj = parser.get_last_error()
+            for err in errorObj.errors:
                 print "Error code: %d \nReason: %s \nDetails: %s\n" % (err.error, err.reason, err.detail)
         else:
-            print ("CONNECTOR NAME: %s" % response['connector'])
-            print ("CONNECTOR STATUS: %s" % response['status'])
+            print ("CONNECTOR NAME: %s" % payloadObj['connector'])
+            print ("CONNECTOR STATUS: %s" % payloadObj['status'])
 
     elif hodApp is HODApps.QUERY_TEXT_INDEX:
         params = dict()
@@ -106,13 +112,14 @@ def main(argv):
         params['print_fields'] = "dropbox_link,author"
         params['summary'] = "quick"
         response = hodClient.get_request(params, hodApp, False)
-        if response is None:
-            errors = hodClient.get_last_error()
-            for err in errors.errors:
+        payloadObj = parser.parse_payload(response)
+        if payloadObj is None:
+            errorObj = parser.get_last_error()
+            for err in errorObj.errors:
                 print "Error code: %d \nReason: %s \nDetails: %s\n" % (err.error, err.reason, err.detail)
         else:
             res = ""
-            for doc in response['documents']:
+            for doc in payloadObj['documents']:
                 res += '\n-----------DOCUMENT ITEM------------\n'
                 res +=  ('SUMMARY: %s\n\n' % (doc['summary']))
                 res +=  ('DROPBOX LINK: %s \n\n' % (doc['dropbox_link'][0]))

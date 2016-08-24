@@ -124,7 +124,7 @@ response = client.get_job_result(jobID)
 ## Using a callback function
 Most methods allow optional callback functions which are executed when the response of the API is received.
 ```python
-def requestCompleted(response, error, **kwargs):
+def requestCompleted(response, **kwargs):
   print response
 
 client.post_request({'text': 'I love Haven OnDemand!'}, HODApps.ANALYZE_SENTIMENT, async=False, requestCompleted)
@@ -167,7 +167,7 @@ print response
 
 ### Synchronous OCR Document GET request with callback function
 ```python
-def requestCompleted(response, error, **kwargs):
+def requestCompleted(response, **kwargs):
   print response
 
 params = {'url': 'https://www.havenondemand.com/sample-content/images/bowers.jpg'}

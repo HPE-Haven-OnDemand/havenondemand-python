@@ -1,12 +1,16 @@
 from havenondemand.hodclient import *
+from havenondemand.hodresponseparser import *
 
 hodClient = HODClient("your-apikey", "v2")
+parser = HODResponseParser()
 
 # callback function
-def requestCompleted(response, error, **context):
+def requestCompleted(response, **context):
     text = ""
-    if error is not None:
-        for err in error.errors:
+    payloadObj = parser.parse_payload(response)
+    if payloadObj is None:
+        errorObj = parser.get_last_error()
+        for err in errorObj.errors:
             if err.error == ErrorCode.QUEUED or err.error == ErrorCode.IN_PROGRESS:
                 # wait for some time then call GetJobStatus or GetJobResult again with the same jobID from err.jobID
                 print (err.reason)
@@ -14,8 +18,8 @@ def requestCompleted(response, error, **context):
                 hodClient.get_job_status(err.jobID, requestCompleted)
             else:
                 text += "Error code: %d \nReason: %s \nDetails: %s\n" % (err.error,err.reason, err.detail)
-    elif response is not None:
-        entities = response["entities"]
+    else:
+        entities = payloadObj["entities"]
         for entity in entities:
             if entity["type"] == "companies_eng":
                 text += "Company name: " + entity["normalized_text"] + "\n"
@@ -25,17 +29,14 @@ def requestCompleted(response, error, **context):
                 text += "People name: " + entity["normalized_text"] + "\n"
     print (text)
 
-def asyncRequestCompleted(jobID, error, **context):
-    if error is not None:
-        for err in error.errors:
-            if err.error == ErrorCode.QUEUED or err.error == ErrorCode.IN_PROGRESS:
-                print (err.reason)
-                time.sleep(2)
-                hodClient.get_job_status(err.jobID, requestCompleted, **context)
-            else:
-                print ("Error code: %d \nReason: %s \nDetails: %s\n" % (err.error,err.reason, err.detail))
-    elif jobID is not None:
-        hodClient.get_job_status(jobID, requestCompleted, **context)
+def asyncRequestCompleted(response, **context):
+    jobID = parser.parse_jobid(response)
+    if jobID is None:
+		errorObj = parser.get_last_error()
+		for err in errorObj.errors:
+			print ("Error code: %d \nReason: %s \nDetails: %s\n" % (err.error,err.reason, err.detail))
+	else:
+		hodClient.get_job_result(jobID, requestCompleted, **context)
 
 
 paramArr = {}

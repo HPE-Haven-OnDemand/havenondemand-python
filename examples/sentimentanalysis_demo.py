@@ -1,18 +1,22 @@
 from havenondemand.hodclient import *
+from havenondemand.hodresponseparser import *
 import sys
 
 hodClient = HODClient("your-api-key")
+parser = HODResponseParser()
 
 # callback function
-def requestCompleted(response, error, **context):
+def requestCompleted(response, **context):
 	resp = ""
-	if error is not None:
-		for err in error.errors:
-			resp += "Error code: %d \nReason: %s \nDetails: %s\njobID: %s\n" % (err.error, err.reason, err.detail, err.jobID)
-	elif response is not None:
+	payloadObj = parser.parse_payload(response)
+	if payloadObj is None:
+		errorObj = parser.get_last_error()
+		for err in errorObj.errors:
+			resp += "Error code: %d \nReason: %s \nDetails: %s\n" % (err.error, err.reason, err.detail)
+	else:
 		app = context["hodapp"]
 		if app == HODApps.ANALYZE_SENTIMENT:
-			positives = response["positive"]
+			positives = payloadObj["positive"]
 			resp += "Positive:\n"
 			for pos in positives:
 				resp += "Sentiment: " + pos["sentiment"] + "\n"
@@ -21,7 +25,7 @@ def requestCompleted(response, error, **context):
 				resp += "Score: " + "%f " % (pos["score"]) + "\n"
 				if 'documentIndex' in pos:
 					resp += "Doc: " + str(pos["documentIndex"]) + "\n"
-			negatives = response["negative"]
+			negatives = payloadObj["negative"]
 			resp += "Negative:\n"
 			for neg in negatives:
 				resp += "Sentiment: " + neg["sentiment"] + "\n"
@@ -30,7 +34,7 @@ def requestCompleted(response, error, **context):
 				resp += "Score: " + "%f " % (neg["score"]) + "\n"
 				if 'documentIndex' in neg:
 					resp += "Doc: " + str(neg["documentIndex"]) + "\n"
-			aggregate = response["aggregate"]
+			aggregate = payloadObj["aggregate"]
 			resp += "Aggregate:\n"
 			resp += "Score: " + "%f " % (aggregate["score"]) + "\n"
 			resp += aggregate["sentiment"]
