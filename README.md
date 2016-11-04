@@ -48,6 +48,18 @@ proxyDict = {
 client = HODClient("API_KEY", version="v1", **proxyDict)
 ```
 
+If you want to change the API version without the need to recreate the instance of the HOD client.
+```python
+client.set_hod_version(newVersion)
+```
+* `newVersion` a string to specify an API version as "v1" or "v2"
+
+If you want to change the API_KEY without the need to recreate the instance of the HOD client.
+```python
+client.set_hod_api_key(newApiKey)
+```
+* `newApiKey` a string to specify a new API_KEY
+
 ## Sending requests to the API - POST and GET
 You can send requests to the API with either a POST or GET request, where POST requests are required for uploading files and recommended for larger size queries and GET requests are recommended for smaller size queries.
 
@@ -67,6 +79,26 @@ client.get_request(params, hodApp, async, callback, **kwargs)
 ```
 * `params` is a dictionary of parameters passed to the API
 * `hodApp` is the endpoint of the API you are calling (see this [list]() for available endpoints and our [documentation](https://dev.havenondemand.com/apis) for descriptions of each of the APIs)
+* `async` specifies if you are calling the API asynchronously or synchronously, which is either `True` or `False`, respectively
+* `callback` *optional* which is a callback function which is executed when the response from the API is received
+* `**kwargs` *optional* a dictionary that holds any custom parameters which is sent back through the provided callback function
+
+### POST request for combinations
+```python
+client.post_request_combination(params, hodApp, async, callback, **kwargs)
+```
+* `params` is a dictionary of parameters passed to the API
+* `hodApp` is the name of the combination API you are calling
+* `async` specifies if you are calling the API asynchronously or synchronously, which is either `True` or `False`, respectively
+* `callback` *optional* which is a callback function which is executed when the response from the API is received
+* `**kwargs` *optional* a dictionary that holds any custom parameters which is sent back through the provided callback function
+
+### GET request for combinations
+```python
+client.get_request_combination(params, hodApp, async, callback, **kwargs)
+```
+* `params` is a dictionary of parameters passed to the API
+* `hodApp` is the name of the combination API you are calling
 * `async` specifies if you are calling the API asynchronously or synchronously, which is either `True` or `False`, respectively
 * `callback` *optional* which is a callback function which is executed when the response from the API is received
 * `**kwargs` *optional* a dictionary that holds any custom parameters which is sent back through the provided callback function
