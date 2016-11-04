@@ -109,7 +109,8 @@ Haven OnDemand's API can be called either synchronously or asynchronously. Users
 ### Synchronous
 To make a synchronous GET request to our Sentiment Analysis API
 ```python
-response = client.get_request({'text': 'I love Haven OnDemand!'}, HODApps.ANALYZE_SENTIMENT, async=False)
+params = {'text': 'I love Haven OnDemand!'}
+response = client.get_request(params, HODApps.ANALYZE_SENTIMENT, async=False)
 ```
 where the response will be in the `response` dictionary.
 
@@ -158,8 +159,8 @@ Most methods allow optional callback functions which are executed when the respo
 ```python
 def requestCompleted(response, **kwargs):
   print response
-
-client.post_request({'text': 'I love Haven OnDemand!'}, HODApps.ANALYZE_SENTIMENT, async=False, requestCompleted)
+params = {'text': 'I love Haven OnDemand!'}
+client.post_request(params, HODApps.ANALYZE_SENTIMENT, async=False, requestCompleted)
 ```
 
 ## POSTing files
