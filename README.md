@@ -165,7 +165,8 @@ client.post_request({'text': 'I love Haven OnDemand!'}, HODApps.ANALYZE_SENTIMEN
 ## POSTing files
 POSTing files is just as easy. Simply include the path to the file you're POSTing in the parameters
 ```python
-response = hodClient.post_request({'file': 'path/to/file.jpg'}, HODApps.OCR_DOCUMENT, async=False)
+params = {'file': 'path/to/file.jpg'}
+response = hodClient.post_request(params, HODApps.OCR_DOCUMENT, async=False)
 ```
 
 ## Examples
