@@ -467,6 +467,8 @@ class HODApps:
     PREDICT = "predict"
     RECOMMEND = "recommend"
     TRAIN_PREDICTOR = "trainpredictor"
+    DELETE_PREDICTION_MODEL = "deletepredictionmodel";
+    GET_PREDICTION_MODEL_DETAILS = "getpredictionmodeldetails";
 
     CREATE_QUERY_PROFILE = "createqueryprofile"
     DELETE_QUERY_PROFILE = "deletequeryprofile"
