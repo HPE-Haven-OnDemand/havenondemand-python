@@ -48,6 +48,18 @@ proxyDict = {
 client = HODClient("API_KEY", version="v1", **proxyDict)
 ```
 
+If you want to change the API version without the need to recreate the instance of the HOD client.
+```python
+client.set_hod_version(newVersion)
+```
+* `newVersion` a string to specify an API version as "v1" or "v2"
+
+If you want to change the API_KEY without the need to recreate the instance of the HOD client.
+```python
+client.set_hod_api_key(newApiKey)
+```
+* `newApiKey` a string to specify a new API_KEY
+
 ## Sending requests to the API - POST and GET
 You can send requests to the API with either a POST or GET request, where POST requests are required for uploading files and recommended for larger size queries and GET requests are recommended for smaller size queries.
 
@@ -71,13 +83,34 @@ client.get_request(params, hodApp, async, callback, **kwargs)
 * `callback` *optional* which is a callback function which is executed when the response from the API is received
 * `**kwargs` *optional* a dictionary that holds any custom parameters which is sent back through the provided callback function
 
+### POST request for combinations
+```python
+client.post_request_combination(params, hodApp, async, callback, **kwargs)
+```
+* `params` is a dictionary of parameters passed to the API
+* `hodApp` is the name of the combination API you are calling
+* `async` specifies if you are calling the API asynchronously or synchronously, which is either `True` or `False`, respectively
+* `callback` *optional* which is a callback function which is executed when the response from the API is received
+* `**kwargs` *optional* a dictionary that holds any custom parameters which is sent back through the provided callback function
+
+### GET request for combinations
+```python
+client.get_request_combination(params, hodApp, async, callback, **kwargs)
+```
+* `params` is a dictionary of parameters passed to the API
+* `hodApp` is the name of the combination API you are calling
+* `async` specifies if you are calling the API asynchronously or synchronously, which is either `True` or `False`, respectively
+* `callback` *optional* which is a callback function which is executed when the response from the API is received
+* `**kwargs` *optional* a dictionary that holds any custom parameters which is sent back through the provided callback function
+
 ## Synchronous vs Asynchronous
 Haven OnDemand's API can be called either synchronously or asynchronously. Users are encouraged to call asynchronously if they are POSTing large files that may require a lot of time to process. If not, calling them synchronously should suffice. For more information on the two, see [here](https://dev.havenondemand.com/docs/AsynchronousAPI.htm).
 
 ### Synchronous
 To make a synchronous GET request to our Sentiment Analysis API
 ```python
-response = client.get_request({'text': 'I love Haven OnDemand!'}, HODApps.ANALYZE_SENTIMENT, async=False)
+params = {'text': 'I love Haven OnDemand!'}
+response = client.get_request(params, HODApps.ANALYZE_SENTIMENT, async=False)
 ```
 where the response will be in the `response` dictionary.
 
@@ -126,14 +159,15 @@ Most methods allow optional callback functions which are executed when the respo
 ```python
 def requestCompleted(response, **kwargs):
   print response
-
-client.post_request({'text': 'I love Haven OnDemand!'}, HODApps.ANALYZE_SENTIMENT, async=False, requestCompleted)
+params = {'text': 'I love Haven OnDemand!'}
+client.post_request(params, HODApps.ANALYZE_SENTIMENT, async=False, requestCompleted)
 ```
 
 ## POSTing files
 POSTing files is just as easy. Simply include the path to the file you're POSTing in the parameters
 ```python
-response = hodClient.post_request({'file': 'path/to/file.jpg'}, HODApps.OCR_DOCUMENT, async=False)
+params = {'file': 'path/to/file.jpg'}
+response = hodClient.post_request(params, HODApps.OCR_DOCUMENT, async=False)
 ```
 
 ## Examples
