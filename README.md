@@ -93,6 +93,7 @@ client.post_request_combination(params, hodApp, async, callback, **kwargs)
 * `callback` *optional* which is a callback function which is executed when the response from the API is received
 * `**kwargs` *optional* a dictionary that holds any custom parameters which is sent back through the provided callback function
 
+
 ### GET request for combinations
 ```python
 client.get_request_combination(params, hodApp, async, callback, **kwargs)
@@ -168,6 +169,17 @@ POSTing files is just as easy. Simply include the path to the file you're POSTin
 ```python
 params = {'file': 'path/to/file.jpg'}
 response = hodClient.post_request(params, HODApps.OCR_DOCUMENT, async=False)
+```
+
+## POSTing files with post_request_combination
+POSTing files to a combination API is slightly different from POSting files to a standalone API.
+```python
+files = list()
+files.append(('file1_input_name', 'path/filename1.xxx'))
+#files.append(('file2_input_name', 'path/filename2.xxx'))
+params = dict()
+params['file'] = files
+response = hodClient.post_request_combination(params, "combination_api_name", async=False)
 ```
 
 ## Examples

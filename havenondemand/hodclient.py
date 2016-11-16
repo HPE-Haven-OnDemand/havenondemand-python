@@ -282,7 +282,6 @@ class HODClient(object):
                 if key == "file":
                     for kk, vv in value :
                         try:
-                            print(kk + "/" + vv)
                             f = open(vv, 'rb')
                             files.append(('file_parameters',kk))
                             files.append(('file', f))
