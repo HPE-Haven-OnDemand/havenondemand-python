@@ -226,7 +226,7 @@ class HODClient(object):
         queryStr += "&combination=%s" % apiname
         for key, value in params.items():
             if key == "file":
-                error = self.__createErrorObject(ErrorCode.INVALID_PARAM, "file resource must be uploaded with Post Request function")
+                error = self.__createErrorObject(ErrorCode.INVALID_PARAM, "file resource must be uploaded with post_request_combination function")
                 if callback is None:
                     return error
                 else:
@@ -278,13 +278,24 @@ class HODClient(object):
         data.append(("combination", apiname))
         files = list()
         for key, value in params.items():
-            if key == "file":
-                error = self.__createErrorObject(ErrorCode.INVALID_PARAM, "file resource is not yet supported.")
-                if callback is None:
-                    return error
+            if isinstance(value, list):
+                if key == "file":
+                    for kk, vv in value :
+                        try:
+                            print(kk + "/" + vv)
+                            f = open(vv, 'rb')
+                            files.append(('file_parameters',kk))
+                            files.append(('file', f))
+                        except IOError:
+                            error = self.__createErrorObject(ErrorCode.IO_ERROR, "File not found")
+                            if callback is None:
+                                return error
+                            else:
+                                callback(error **kwargs)
+                                return
                 else:
-                    callback(error, **kwargs)
-                    return
+                    for vv in value:
+                        data.append((key, vv))
             else:
                 if self.__isJSON(value): # if its a json -> don't quote
                     param = '{"name":"%s","value":%s}' % (key, value)
@@ -467,8 +478,6 @@ class HODApps:
     PREDICT = "predict"
     RECOMMEND = "recommend"
     TRAIN_PREDICTOR = "trainpredictor"
-    DELETE_PREDICTION_MODEL = "deletepredictionmodel";
-    GET_PREDICTION_MODEL_DETAILS = "getpredictionmodeldetails";
 
     CREATE_QUERY_PROFILE = "createqueryprofile"
     DELETE_QUERY_PROFILE = "deletequeryprofile"
