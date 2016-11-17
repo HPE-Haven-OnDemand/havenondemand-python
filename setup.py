@@ -1,12 +1,13 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '2.0.0'
+version = '2.0.1'
 
 setup(name='havenondemand',
       version=version,
       description="Haven OnDemand Python client library",
       long_description="""\
+	  This Python client library helps you easily access over 70 APIs from HPE Haven OnDemand platform.
 """,
       classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
       keywords='Haven OnDemand havenondemand hod',
