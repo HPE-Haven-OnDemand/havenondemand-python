@@ -118,10 +118,11 @@ where the response will be in the `response` dictionary.
 ### Asynchronous
 To make an asynchronous POST request to our Sentiment Analysis API
 ```python
-response_async = post_request({'text': 'I love Haven OnDemand!'}, HODApps.ANALYZE_SENTIMENT, async=True)
+params = {'text': 'I love Haven OnDemand!'}
+response_async = post_request(params, HODApps.ANALYZE_SENTIMENT, async=True)
 jobID = response_async['jobID']
 ```
-which will return back the job ID of your call.
+which will return back the job ID of your call. Use the job ID to call the get_job_status() or get_job_result() to get the result.
 
 #### Getting the results of an asynchronous request - Status API and Result API
 

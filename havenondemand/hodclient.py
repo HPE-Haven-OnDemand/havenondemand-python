@@ -3,7 +3,7 @@ import json
 import time
 from requests.exceptions import ConnectionError
 from requests.exceptions import RequestException
-from errorcodes import ErrorCode
+from havenondemand.errorcodes import ErrorCode
 
 class HODClient(object):
     hodEndPoint = "http://api.havenondemand.com/1/api/"
@@ -43,19 +43,19 @@ class HODClient(object):
                     callback(jsonObj, **kwargs)
         except requests.Timeout:
             print (requests.exceptions)
-            error = self.__createErrorObject(ErrorCode.TIMEOUT, "timeout", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.TIMEOUT, "timeout", requests.exceptions, jobId)
             if callback is None:
                 return error
             else:
                 callback(error, **kwargs)
         except requests.HTTPError:
-            error = self.__createErrorObject(ErrorCode.HTTP_ERROR, "HTTP error", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.HTTP_ERROR, "HTTP error", requests.exceptions, jobId)
             if callback is None:
                 return error
             else:
                 callback(error, **kwargs)
         except requests.ConnectionError:
-            error = self.__createErrorObject(ErrorCode.CONNECTION_ERROR, "Connection error", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.CONNECTION_ERROR, "Connection error", requests.exceptions, jobId)
             if callback is None:
                 return error
             else:
@@ -77,19 +77,19 @@ class HODClient(object):
                 else:
                     callback(jsonObj, **kwargs)
         except requests.Timeout:
-            error = self.__createErrorObject(ErrorCode.TIMEOUT, "timeout", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.TIMEOUT, "timeout", requests.exceptions, jobId)
             if callback is None:
                 return error
             else:
                 callback(error, **kwargs)
         except requests.HTTPError:
-            error = self.__createErrorObject(ErrorCode.HTTP_ERROR, "HTTP error", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.HTTP_ERROR, "HTTP error", requests.exceptions, jobId)
             if callback is None:
                 return error
             else:
                 callback(error, **kwargs)
         except requests.ConnectionError:
-            error = self.__createErrorObject(ErrorCode.CONNECTION_ERROR, "Connection error", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.CONNECTION_ERROR, "Connection error", requests.exceptions, jobId)
             if callback is None:
                 return error
             else:
@@ -112,7 +112,7 @@ class HODClient(object):
                             f = open(vv, 'rb')
                             files.append((key, f))
                         except IOError:
-                            error = self.__createErrorObject(ErrorCode.IO_ERROR, "File not found")
+                            error = self.__create_error_object(ErrorCode.IO_ERROR, "File not found")
                             if callback is None:
                                 return error
                             else:
@@ -127,7 +127,7 @@ class HODClient(object):
                         f = open(value, 'rb')
                         files = {key: f}
                     except IOError:
-                        error = self.__createErrorObject(ErrorCode.IO_ERROR, "File not found")
+                        error = self.__create_error_object(ErrorCode.IO_ERROR, "File not found")
                         if callback is None:
                             return error
                         else:
@@ -148,19 +148,19 @@ class HODClient(object):
                 else:
                     callback(jsonObj, **kwargs)
         except requests.Timeout:
-            error = self.__createErrorObject(ErrorCode.TIMEOUT, "timeout", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.TIMEOUT, "timeout", requests.exceptions)
             if callback is None:
                 return error
             else:
                 callback(error, **kwargs)
         except requests.HTTPError:
-            error = self.__createErrorObject(ErrorCode.HTTP_ERROR, "HTTP error", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.HTTP_ERROR, "HTTP error", requests.exceptions)
             if callback is None:
                 return error
             else:
                 callback(error, **kwargs)
         except ConnectionError:
-            error = self.__createErrorObject(ErrorCode.CONNECTION_ERROR, "Connection error", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.CONNECTION_ERROR, "Connection error", requests.exceptions)
             if callback is None:
                 return error
             else:
@@ -175,7 +175,7 @@ class HODClient(object):
         queryStr += "?apikey=%s" % (self.apiKey)
         for key, value in params.items():
             if key == "file":
-                error = self.__createErrorObject(ErrorCode.INVALID_PARAM, "file resource must be uploaded with PostRequest function")
+                error = self.__create_error_object(ErrorCode.INVALID_PARAM, "file resource must be uploaded with PostRequest function")
                 if callback is None:
                     return error
                 else:
@@ -199,19 +199,19 @@ class HODClient(object):
                 else:
                     callback(jsonObj, **kwargs)
         except requests.Timeout:
-            error = self.__createErrorObject(ErrorCode.TIMEOUT, "timeout", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.TIMEOUT, "timeout", requests.exceptions)
             if callback is None:
                 return error
             else:
                 callback(error, **kwargs)
         except requests.HTTPError:
-            error = self.__createErrorObject(ErrorCode.HTTP_ERROR, "HTTP error", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.HTTP_ERROR, "HTTP error", requests.exceptions)
             if callback is None:
                 return error
             else:
                 callback(error, **kwargs)
         except ConnectionError:
-            error = self.__createErrorObject(ErrorCode.CONNECTION_ERROR, "Connection error", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.CONNECTION_ERROR, "Connection error", requests.exceptions)
             if callback is None:
                 return error
             else:
@@ -226,13 +226,13 @@ class HODClient(object):
         queryStr += "&combination=%s" % apiname
         for key, value in params.items():
             if key == "file":
-                error = self.__createErrorObject(ErrorCode.INVALID_PARAM, "file resource must be uploaded with post_request_combination function")
+                error = self.__create_error_object(ErrorCode.INVALID_PARAM, "file resource must be uploaded with post_request_combination function")
                 if callback is None:
                     return error
                 else:
                     callback(error, **kwargs)
                     return
-            if self.__isJSON(value): # if its a json -> don't quote
+            if self.__is_json(value): # if its a json -> don't quote
                 queryStr += '&parameters={"name":"%s","value":%s}' % (key, value)
             else: # if it's a string -> quote it
                 queryStr += '&parameters={"name":"%s","value":"%s"}' % (key, value)
@@ -249,19 +249,19 @@ class HODClient(object):
                 else:
                     callback(jsonObj, **kwargs)
         except requests.Timeout:
-            error = self.__createErrorObject(ErrorCode.TIMEOUT, "timeout", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.TIMEOUT, "timeout", requests.exceptions)
             if callback is None:
                 return error
             else:
                 callback(error, **kwargs)
         except requests.HTTPError:
-            error = self.__createErrorObject(ErrorCode.HTTP_ERROR, "HTTP error", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.HTTP_ERROR, "HTTP error", requests.exceptions)
             if callback is None:
                 return error
             else:
                 callback(error, **kwargs)
         except ConnectionError:
-            error = self.__createErrorObject(ErrorCode.CONNECTION_ERROR, "Connection error", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.CONNECTION_ERROR, "Connection error", requests.exceptions)
             if callback is None:
                 return error
             else:
@@ -286,7 +286,7 @@ class HODClient(object):
                             files.append(('file_parameters',kk))
                             files.append(('file', f))
                         except IOError:
-                            error = self.__createErrorObject(ErrorCode.IO_ERROR, "File not found")
+                            error = self.__create_error_object(ErrorCode.IO_ERROR, "File not found")
                             if callback is None:
                                 return error
                             else:
@@ -296,7 +296,7 @@ class HODClient(object):
                     for vv in value:
                         data.append((key, vv))
             else:
-                if self.__isJSON(value): # if its a json -> don't quote
+                if self.__is_json(value): # if its a json -> don't quote
                     param = '{"name":"%s","value":%s}' % (key, value)
                 else: # if it's a string -> quote it
                     param = '{"name":"%s","value":"%s"}' % (key, value)
@@ -314,19 +314,19 @@ class HODClient(object):
                 else:
                     callback(jsonObj, **kwargs)
         except requests.Timeout:
-            error = self.__createErrorObject(ErrorCode.TIMEOUT, "timeout", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.TIMEOUT, "timeout", requests.exceptions)
             if callback is None:
                 return error
             else:
                 callback(error, **kwargs)
         except requests.HTTPError:
-            error = self.__createErrorObject(ErrorCode.HTTP_ERROR, "HTTP error", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.HTTP_ERROR, "HTTP error", requests.exceptions)
             if callback is None:
                 return error
             else:
                 callback(error, **kwargs)
         except ConnectionError:
-            error = self.__createErrorObject(ErrorCode.CONNECTION_ERROR, "Connection error", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.CONNECTION_ERROR, "Connection error", requests.exceptions)
             if callback is None:
                 return error
             else:
@@ -345,7 +345,7 @@ class HODClient(object):
                             f = open(vv, 'rb')
                             files.append((key, f))
                         except IOError:
-                            error = self.__createErrorObject(ErrorCode.IO_ERROR, "File not found")
+                            error = self.__create_error_object(ErrorCode.IO_ERROR, "File not found")
                             if callback is None:
                                 return error
                             else:
@@ -360,7 +360,7 @@ class HODClient(object):
                         f = open(value, 'rb')
                         files = {key: f}
                     except IOError:
-                        error = self.__createErrorObject(ErrorCode.IO_ERROR, "File not found")
+                        error = self.__create_error_object(ErrorCode.IO_ERROR, "File not found")
                         if callback is None:
                             return error
                         else:
@@ -381,19 +381,19 @@ class HODClient(object):
                 else:
                     callback(jsonObj, **kwargs)
         except requests.Timeout:
-            error = self.__createErrorObject(ErrorCode.TIMEOUT, "timeout", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.TIMEOUT, "timeout", requests.exceptions)
             if callback is None:
                 return error
             else:
                 callback(error, **kwargs)
         except requests.HTTPError:
-            error = self.__createErrorObject(ErrorCode.HTTP_ERROR, "HTTP error", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.HTTP_ERROR, "HTTP error", requests.exceptions)
             if callback is None:
                 return error
             else:
                 callback(error, **kwargs)
         except ConnectionError:
-            error = self.__createErrorObject(ErrorCode.CONNECTION_ERROR, "Connection error", requests.exceptions, jobId)
+            error = self.__create_error_object(ErrorCode.CONNECTION_ERROR, "Connection error", requests.exceptions)
             if callback is None:
                 return error
             else:
@@ -405,28 +405,28 @@ class HODClient(object):
                 jsonObj = json.loads(response.text)
                 return jsonObj
             except ValueError:
-                return self.__createErrorObject(response.status_code, response.reason, response.text, jobId)
+                return self.__create_error_object(response.status_code, response.reason, response.text, jobId)
         else:
             try:
                 jsonObj = json.loads(response.text)
                 return jsonObj
             except ValueError:
-                return self.__createErrorObject(ErrorCode.INVALID_HOD_RESPONSE, "Response is not a json string.", response.text)
+                return self.__create_error_object(ErrorCode.INVALID_HOD_RESPONSE, "Response is not a json string.", response.text)
 
-    def __createErrorObject(self,code, reason, detail="", jobID=""):
+    def __create_error_object(self,code, reason, detail="", job_id=""):
         err = {}
         err["error"] = code
         err["reason"] = reason
         err["detail"] = detail
-        err["jobID"] = jobID
+        err["jobID"] = job_id
         jsonStr = json.dumps(err)
         jsonObj = json.loads(jsonStr)
         return jsonObj
 
-    def __isJSON(self, string):
+    def __is_json(self, string):
         try:
             json.loads(string)
-        except ValueError, e:
+        except ValueError:
             return False
         return True
 
@@ -474,6 +474,8 @@ class HODApps:
     UPDATE_CLASSIFICATION_OBJECTS = "updateclassificationobjects"
     UPDATE_POLICY_OBJECTS = "updatepolicyobjects"
 
+    DELETE_PREDICTION_MODEL = "deletepredictionmodel"
+    GET_PREDICTION_MODEL_DETAILS = "getpredictionmodeldetails"
     PREDICT = "predict"
     RECOMMEND = "recommend"
     TRAIN_PREDICTOR = "trainpredictor"
