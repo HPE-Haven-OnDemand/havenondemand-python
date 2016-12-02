@@ -1,7 +1,9 @@
 setup.cfg
 setup.py
 havenondemand/__init__.py
+havenondemand/errorcodes.py
 havenondemand/hodclient.py
+havenondemand/hodresponseparser.py
 havenondemand.egg-info/PKG-INFO
 havenondemand.egg-info/SOURCES.txt
 havenondemand.egg-info/dependency_links.txt
